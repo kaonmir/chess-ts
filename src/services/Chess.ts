@@ -14,7 +14,7 @@ import Log from "./Log";
 
 export default class Chess {
   private map: Array<Piece>;
-  private logs: Array<Log>;
+  private logs: Array<Log> = [];
   private turn: SIDE = SIDE.WHITE;
 
   constructor(input: string) {

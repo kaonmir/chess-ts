@@ -16,7 +16,7 @@ const input = {
   ........
   PPPPPPPP
   `,
-  log: "",
+  log: "56 48 0 8 57 49 1 9 58 50 2 10 59 51 3 11",
 };
 
 var chess: Chess;
@@ -40,10 +40,6 @@ describe("Log working test", () => {
       PPPP....
       ....PPPP
     `;
-    chess.move(56, 48), chess.move(0, 8);
-    chess.move(57, 49), chess.move(1, 9);
-    chess.move(58, 50), chess.move(2, 10);
-    chess.move(59, 51), chess.move(3, 11);
 
     expect(chess.saveMapToString()).toEqual(
       resultMap.replaceAll(/\r?\n|\r|\n| /g, "")
