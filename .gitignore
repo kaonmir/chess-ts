@@ -1,3 +1,5 @@
 node_modules
+dist
 __test__/dist
 src/services/dist
+src/services/rules/dist/

@@ -1,10 +1,10 @@
-import rule from "./rule";
-import { EMPTY_PIECE } from "../Piece";
-import ErrorMessage from "../string";
+import ruleIF from "./ruleIF";
+import { EMPTY_PIECE } from "../types/Piece";
+import ErrorMessage from "../types/string";
 import bishopRule from "./bishopRule";
 import rookRule from "./rookRule";
 
-const queenRule: rule = {
+const queenRule: ruleIF = {
   availableZone: (map, cur) => [
     ...bishopRule.availableZone(map, cur),
     ...rookRule.availableZone(map, cur),

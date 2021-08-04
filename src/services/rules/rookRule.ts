@@ -1,8 +1,8 @@
-import rule from "./rule";
-import { EMPTY_PIECE, isPieceSame } from "../Piece";
-import ErrorMessage from "../string";
+import ruleIF from "./ruleIF";
+import { EMPTY_PIECE, isPieceSame } from "../types/Piece";
+import ErrorMessage from "../types/string";
 
-const rookRule: rule = {
+const rookRule: ruleIF = {
   availableZone: (map, cur) => {
     var answer: Array<number> = [];
 

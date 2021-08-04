@@ -1,9 +1,9 @@
-import rule from "./rule";
-import { EMPTY_PIECE } from "../Piece";
-import SIDE from "../SIDE";
-import ErrorMessage from "../string";
+import ruleIF from "./ruleIF";
+import { EMPTY_PIECE } from "../types/Piece";
+import SIDE from "../types/SIDE";
+import ErrorMessage from "../types/string";
 
-const pawnRule: rule = {
+const pawnRule: ruleIF = {
   availableZone: (map, cur) => {
     var answer: Array<number>;
 

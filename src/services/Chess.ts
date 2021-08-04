@@ -1,9 +1,9 @@
-import PTYPE from "./PTYPE";
-import { EMPTY_PIECE, Piece } from "./Piece";
-import ErrorMessage from "./string";
+import PTYPE from "./types/PTYPE";
+import { EMPTY_PIECE, Piece } from "./types/Piece";
+import ErrorMessage from "./types/string";
 import ruleBook from "./rules/ruleBook";
-import SIDE from "./SIDE";
-import Log from "./Log";
+import SIDE from "./types/SIDE";
+import Log from "./types/Log";
 
 /**
  * {
@@ -14,7 +14,7 @@ import Log from "./Log";
 
 export default class Chess {
   private map: Array<Piece>;
-  private logs: Array<Log>;
+  private logs: Array<Log> = [];
   private turn: SIDE = SIDE.WHITE;
 
   constructor(input: string) {
