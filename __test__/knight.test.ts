@@ -49,7 +49,7 @@ describe("Knight for each cases", () => {
 
     chess.move(55, 38);
     chess.move(0, 10);
-    expect(chess.saveMapToString().replaceAll(/\r?\n|\r|\n| /g, "")).toEqual(
+    expect(chess.saveMapToString()).toEqual(
       resultMap.replaceAll(/\r?\n|\r|\n| /g, "")
     );
   });

@@ -9,8 +9,7 @@
     "strict": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "esModuleInterop": true,
-    "lib": ["ESNext.String"]
+    "esModuleInterop": true
   },
   "include": ["src"]
 }
