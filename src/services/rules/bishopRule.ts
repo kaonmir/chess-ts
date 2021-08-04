@@ -1,9 +1,9 @@
-import rule from "./rule";
-import { Piece, EMPTY_PIECE, isPieceSame } from "../Piece";
-import PTYPE from "../PTYPE";
-import ErrorMessage from "../string";
+import ruleIF from "./ruleIF";
+import { Piece, EMPTY_PIECE, isPieceSame } from "../types/Piece";
+import PTYPE from "../types/PTYPE";
+import ErrorMessage from "../types/string";
 
-const bishopRule: rule = {
+const bishopRule: ruleIF = {
   availableZone: (map, cur) => {
     var answer: Array<number> = [];
 

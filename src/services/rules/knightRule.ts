@@ -1,6 +1,6 @@
-import rule from "./Rule";
-import { EMPTY_PIECE } from "../Piece";
-import ErrorMessage from "../string";
+import ruleIF from "./ruleIF";
+import { EMPTY_PIECE } from "../types/Piece";
+import ErrorMessage from "../types/string";
 
 /*
  0  1  2  3  4  5  6  7
@@ -13,7 +13,7 @@ import ErrorMessage from "../string";
 56 57 58 59 60 61 62 63
 */
 
-const knightRule: rule = {
+const knightRule: ruleIF = {
   availableZone: (map, cur) => {
     const p = { x: Math.floor(cur / 8), y: cur % 8 };
     // l: 6, 15, -10, -17

@@ -1,9 +1,9 @@
-import PTYPE from "./PTYPE";
-import { EMPTY_PIECE, Piece } from "./Piece";
-import ErrorMessage from "./string";
+import PTYPE from "./types/PTYPE";
+import { EMPTY_PIECE, Piece } from "./types/Piece";
+import ErrorMessage from "./types/string";
 import ruleBook from "./rules/ruleBook";
-import SIDE from "./SIDE";
-import Log from "./Log";
+import SIDE from "./types/SIDE";
+import Log from "./types/Log";
 
 /**
  * {

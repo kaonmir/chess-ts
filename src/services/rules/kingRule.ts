@@ -1,8 +1,8 @@
-import rule from "./rule";
-import { EMPTY_PIECE } from "../Piece";
-import ErrorMessage from "../string";
+import ruleIF from "./ruleIF";
+import { EMPTY_PIECE } from "../types/Piece";
+import ErrorMessage from "../types/string";
 
-const kingRule: rule = {
+const kingRule: ruleIF = {
   availableZone: (map, cur) => {
     const steps = [-9, -8, -7, -1, 1, 7, 8, 9];
     return steps
