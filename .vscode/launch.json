@@ -5,12 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "pwa-node",
+      "command": "yarn test",
+      "name": "Run npm start",
       "request": "launch",
-      "name": "Launch Program",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${file}",
-      "preLaunchTask": "tsc: build - tsconfig.json"
+      "type": "node-terminal"
     }
   ]
 }

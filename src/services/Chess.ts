@@ -17,7 +17,6 @@ export default class Chess {
   private map: Array<Piece>;
   private logs: Array<Log> = [];
   private turn: SIDE = SIDE.WHITE;
-  private kingPositions: { [id: number]: number } = {};
 
   constructor(input: string) {
     const { map: mapString, log: logString }: { map: string; log: string } =
@@ -41,7 +40,6 @@ export default class Chess {
               ? SIDE.BLACK
               : SIDE.WHITE; // Lowercase == black
           newMap.push(fromStringToPiece(c));
-          if (c.toLowerCase() === PTYPE.King) this.kingPositions[side] = idx;
         } else throw Error(ErrorMessage.INPUT_FILE + `// "${c}"`);
       });
 
@@ -77,9 +75,7 @@ export default class Chess {
 
     var answer = Array.from(answerSet).sort((a, b) => a - b);
     const curSide = this.map[cur].side;
-    return answer.filter((dst) =>
-      checkRule.isAvailable(this.map, cur, dst, this.kingPositions[curSide])
-    );
+    return answer.filter((dst) => checkRule.isAvailable(this.map, cur, dst));
   }
 
   move(cur: number, dst: number): Boolean {
@@ -93,7 +89,7 @@ export default class Chess {
         this.logs.push({ cur, dst });
         this.turn = this.map[dst].side === SIDE.BLACK ? SIDE.WHITE : SIDE.BLACK;
 
-        return checkRule.isChecked(this.map, this.kingPositions[this.turn]);
+        return checkRule.isChecked(this.map, this.turn);
       }
     }
 

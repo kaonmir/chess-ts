@@ -32,7 +32,7 @@ beforeEach(() => chess.loadMapFromMap(legacyMap));
 
 test("King's movement must be restricted if checked", () => {
   chess.move(17, 18);
-  expect(chess.availableZone(0)).toEqual([1, 9]);
+  expect(chess.availableZone(0)).toEqual([1, 8]);
 });
 
 /*
