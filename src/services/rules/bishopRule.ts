@@ -1,5 +1,5 @@
 import ruleIF from "./ruleIF";
-import { Piece, EMPTY_PIECE, isPieceSame } from "../types/Piece";
+import Piece, { EMPTY_PIECE, isPieceSame } from "../types/Piece";
 import PTYPE from "../types/PTYPE";
 import ErrorMessage from "../types/string";
 

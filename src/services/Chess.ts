@@ -1,9 +1,10 @@
 import PTYPE from "./types/PTYPE";
-import { EMPTY_PIECE, Piece } from "./types/Piece";
+import Piece, { EMPTY_PIECE, fromStringToPiece } from "./types/Piece";
 import ErrorMessage from "./types/string";
 import ruleBook from "./rules/ruleBook";
 import SIDE from "./types/SIDE";
 import Log from "./types/Log";
+import checkRule from "./rules/checkRule";
 
 /**
  * {
@@ -16,6 +17,7 @@ export default class Chess {
   private map: Array<Piece>;
   private logs: Array<Log> = [];
   private turn: SIDE = SIDE.WHITE;
+  private kingPositions: { [id: number]: number } = {};
 
   constructor(input: string) {
     const { map: mapString, log: logString }: { map: string; log: string } =
@@ -30,15 +32,16 @@ export default class Chess {
     mapString
       .replaceAll(/\r?\n|\r|\n| /g, "")
       .split("")
-      .forEach((c) => {
+      .forEach((c, idx) => {
         if ((<any>Object).values(PTYPE).includes(c.toLowerCase())) {
-          const side =
+          const side: SIDE =
             c === "."
               ? SIDE.EMPTY
               : c === c.toLowerCase()
               ? SIDE.BLACK
               : SIDE.WHITE; // Lowercase == black
-          newMap.push({ piece: c as PTYPE, side });
+          newMap.push(fromStringToPiece(c));
+          if (c.toLowerCase() === PTYPE.King) this.kingPositions[side] = idx;
         } else throw Error(ErrorMessage.INPUT_FILE + `// "${c}"`);
       });
 
@@ -67,25 +70,30 @@ export default class Chess {
   }
 
   availableZone(cur: number): Array<number> {
-    var answer = new Set<number>();
-    ruleBook[this.map[cur].piece.toLowerCase()]
+    var answerSet = new Set<number>();
+    ruleBook[this.map[cur].ptype.toLowerCase()]
       .map((rule) => rule.availableZone(this.map, cur))
-      .map((zone) => zone.forEach((k) => answer.add(k)));
+      .map((zone) => zone.forEach((k) => answerSet.add(k)));
 
-    return Array.from(answer).sort((a, b) => a - b);
+    var answer = Array.from(answerSet).sort((a, b) => a - b);
+    const curSide = this.map[cur].side;
+    return answer.filter((dst) =>
+      checkRule.isAvailable(this.map, cur, dst, this.kingPositions[curSide])
+    );
   }
 
-  move(cur: number, dst: number) {
+  move(cur: number, dst: number): Boolean {
     if (this.map[cur] === EMPTY_PIECE) throw Error(ErrorMessage.MOVE_EMPTY);
     else if (this.turn !== this.map[cur].side)
       throw Error(ErrorMessage.MOVE_ENEMY);
 
-    for (const rule of ruleBook[this.map[cur].piece.toLowerCase()]) {
+    for (const rule of ruleBook[this.map[cur].ptype.toLowerCase()]) {
       if (rule.availableZone(this.map, cur).includes(dst)) {
         this.map = rule.move(this.map, cur, dst);
         this.logs.push({ cur, dst });
         this.turn = this.map[dst].side === SIDE.BLACK ? SIDE.WHITE : SIDE.BLACK;
-        return;
+
+        return checkRule.isChecked(this.map, this.kingPositions[this.turn]);
       }
     }
 
@@ -98,7 +106,7 @@ export default class Chess {
   saveMap = () => this.map;
   saveMapToString = (): String =>
     this.map
-      .map((p) => (p.side === SIDE.WHITE ? p.piece.toUpperCase() : p.piece))
+      .map((p) => (p.side === SIDE.WHITE ? p.ptype.toUpperCase() : p.ptype))
       .join("");
 
   saveLog = () => this.logs;

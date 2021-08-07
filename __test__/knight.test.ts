@@ -1,5 +1,5 @@
 import Chess from "../src/services/Chess";
-import { EMPTY_PIECE, Piece } from "../src/services/types/Piece";
+import Piece, { EMPTY_PIECE } from "../src/services/types/Piece";
 
 test("sadf", () => {
   expect(0).toBe(0);
@@ -7,10 +7,10 @@ test("sadf", () => {
 
 const input = {
   map: `
-  n.......
+  n.....k.
   ........
   ........
-  ........
+  .......K
   .....Nn.
   ........
   ......NN
@@ -31,20 +31,19 @@ beforeEach(() => chess.loadMapFromMap(legacyMap));
 describe("Knight for each cases", () => {
   test("Knight available zone", () => {
     expect(chess.availableZone(0)).toEqual([10, 17]);
-    expect(chess.availableZone(37)).toEqual([20, 22, 27, 31, 43, 47, 52]);
+    expect(chess.availableZone(37)).toEqual([20, 22, 27, 43, 47, 52]);
     expect(chess.availableZone(38)).toEqual([21, 23, 28, 44, 53, 55]);
   });
   test("Knight move test 1", () => {
     const resultMap = `
+      ......k.
+      ..n.....
       ........
-      ..n..... 
-      ........ 
-      ........ 
+      .......K
       .....NN.
       ........
       ......N.
       ........`;
-
     chess.move(55, 38);
     chess.move(0, 10);
     expect(chess.saveMapToString()).toEqual(

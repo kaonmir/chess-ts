@@ -2,6 +2,7 @@ import ruleIF from "./ruleIF";
 import { EMPTY_PIECE } from "../types/Piece";
 import SIDE from "../types/SIDE";
 import ErrorMessage from "../types/string";
+import { isEnemy } from "../types/Piece";
 
 const pawnRule: ruleIF = {
   availableZone: (map, cur) => {
@@ -20,7 +21,7 @@ const pawnRule: ruleIF = {
         if (idx === 1 && dst % 8 === 7) return false;
         if (idx === 2 && dst % 8 === 0) return false;
 
-        return map[dst].side !== SIDE.EMPTY && map[dst].side !== map[cur].side;
+        return isEnemy(map[cur], map[dst]);
       });
   },
 
