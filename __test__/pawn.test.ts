@@ -45,6 +45,23 @@ describe("Pawn for each case", () => {
     expect(chess.availableZone(53)).toEqual([]);
     expect(chess.availableZone(54)).toEqual([45]);
   });
+  test("almost there", () => {
+    const map = `
+      .......k
+      ........
+      ..P......
+      ........
+      ........
+      ..p.....
+      ........
+      .......K
+      `;
+    chess.loadMapFromString(map);
+    chess.move(18, 10);
+    chess.move(42, 50);
+  });
+
+  // TODO: Promotion
 });
 /*
  0  1  2  3  4  5  6  7
