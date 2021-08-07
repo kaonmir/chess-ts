@@ -1,5 +1,5 @@
 import Chess from "../src/services/Chess";
-import Piece, { EMPTY_PIECE } from "../src/services/types/Piece";
+import Piece from "../src/services/types/Piece";
 import PTYPE from "../src/services/types/PTYPE";
 import SIDE from "../src/services/types/SIDE";
 
