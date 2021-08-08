@@ -92,6 +92,7 @@ export default class Chess {
   }
 
   isCheckMate = () =>
+    checkRule.isChecked(this.map, this.turn) &&
     !this.map.some((piece, cur) => {
       if (piece.side === this.turn) return this.availableZone(cur).length !== 0;
       else return false;

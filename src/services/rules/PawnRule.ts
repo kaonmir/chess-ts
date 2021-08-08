@@ -6,8 +6,6 @@ import { isEnemy } from "../types/Piece";
 
 const pawnRule: ruleIF = {
   availableZone: (map, cur) => {
-    var answer: Array<number>;
-
     const steps: { [id: number]: Array<number> } = {
       [SIDE.BLACK]: [8, 16, 7, 9], // F, L, R
       [SIDE.WHITE]: [-8, -16, -9, -7], // F, L, R
