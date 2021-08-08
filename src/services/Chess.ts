@@ -33,12 +33,7 @@ export default class Chess {
       .split("")
       .forEach((c, idx) => {
         if ((<any>Object).values(PTYPE).includes(c.toLowerCase())) {
-          const side: SIDE =
-            c === "."
-              ? SIDE.EMPTY
-              : c === c.toLowerCase()
-              ? SIDE.BLACK
-              : SIDE.WHITE; // Lowercase == black
+          // Lowercase == black
           newMap.push(fromStringToPiece(c));
         } else throw Error(ErrorMessage.INPUT_FILE + `// "${c}"`);
       });

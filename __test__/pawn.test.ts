@@ -28,37 +28,50 @@ beforeAll(() => {
   chess = new Chess(JSON.stringify(input));
   legacyMap = chess.saveMap();
 });
-beforeEach(() => chess.loadMapFromMap(legacyMap));
 
 describe("Pawn for each case", () => {
-  test("pawn move", () => {
-    expect(chess.availableZone(8)).toEqual([16, 24]);
-    expect(chess.availableZone(9)).toEqual([17, 25]);
-    expect(chess.availableZone(48)).toEqual([32, 40]);
-    expect(chess.availableZone(49)).toEqual([33, 41]);
-  });
-  test("pawn attack a opponent", () => {
-    expect(chess.availableZone(13)).toEqual([21, 22, 29]);
-    expect(chess.availableZone(14)).toEqual([]);
+  describe("Pawn simple move", () => {
+    test("pawn move", () => {
+      expect(chess.availableZone(8)).toEqual([16, 24]);
+      expect(chess.availableZone(9)).toEqual([17, 25]);
+      expect(chess.availableZone(48)).toEqual([32, 40]);
+      expect(chess.availableZone(49)).toEqual([33, 41]);
+    });
+    test("pawn attack a opponent", () => {
+      expect(chess.availableZone(13)).toEqual([21, 22, 29]);
+      expect(chess.availableZone(14)).toEqual([]);
 
-    expect(chess.availableZone(52)).toEqual([36, 44, 45]);
-    expect(chess.availableZone(53)).toEqual([]);
-    expect(chess.availableZone(54)).toEqual([45]);
+      expect(chess.availableZone(52)).toEqual([36, 44, 45]);
+      expect(chess.availableZone(53)).toEqual([]);
+      expect(chess.availableZone(54)).toEqual([45]);
+    });
   });
-  test("almost there", () => {
+
+  describe("version 2", () => {
     const map = `
-      .......k
-      ........
-      ..P......
-      ........
-      ........
-      ..p.....
-      ........
-      .......K
-      `;
-    chess.loadMapFromString(map);
-    chess.move(18, 10);
-    chess.move(42, 50);
+    .......k
+    ....p...
+    ..P.....
+    ....P...
+    ........
+    ..p.....
+    ........
+    .......K
+    `;
+    test("don't catch with 2 steps", () => {
+      chess.loadMapFromString(map);
+      expect(chess.availableZone(28)).toEqual([20]);
+      expect(chess.availableZone(12)).toEqual([20]);
+    });
+
+    test("almost there", () => {
+      chess.loadMapFromString(map);
+      chess.move(18, 10);
+      chess.move(42, 50);
+
+      chess.move(10, 2);
+      chess.move(50, 58);
+    });
   });
 
   // TODO: Promotion

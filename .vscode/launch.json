@@ -6,7 +6,7 @@
   "configurations": [
     {
       "command": "yarn test",
-      "name": "Run npm start",
+      "name": "Run yarn test",
       "request": "launch",
       "type": "node-terminal"
     }
