@@ -1,6 +1,5 @@
 import ruleIF from "./ruleIF";
-import Piece, { EMPTY_PIECE, isPieceSame } from "../types/Piece";
-import PTYPE from "../types/PTYPE";
+import { EMPTY_PIECE, isPieceSame } from "../types/Piece";
 import ErrorMessage from "../types/string";
 
 const bishopRule: ruleIF = {

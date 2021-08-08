@@ -1,4 +1,3 @@
-import Piece from "../types/Piece";
 import PTYPE from "../types/PTYPE";
 import ruleIF from "./ruleIF";
 
