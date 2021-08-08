@@ -55,7 +55,7 @@ export default class Chess {
     });
 
     try {
-      newLog.forEach(({ cur, dst }) => this.move(cur, dst, () => PTYPE.EMPTY));
+      newLog.forEach(({ cur, dst }) => this.move(cur, dst));
     } catch {
       throw Error(ErrorMessage.LOG_LOAD);
     }
@@ -74,7 +74,10 @@ export default class Chess {
     return answer.filter((dst) => checkRule.isAvailable(this.map, cur, dst));
   }
 
-  move(cur: number, dst: number, promote: (piece: Piece) => PTYPE): Boolean {
+  move(
+    cur: number,
+    dst: number
+  ): { isChecked: Boolean; isPromotable: Boolean } {
     if (this.map[cur] === EMPTY_PIECE) throw Error(ErrorMessage.MOVE_EMPTY);
     else if (this.turn !== this.map[cur].side)
       throw Error(ErrorMessage.MOVE_ENEMY);
@@ -85,21 +88,23 @@ export default class Chess {
         this.logs.push({ cur, dst });
         this.turn = this.map[dst].side === SIDE.BLACK ? SIDE.WHITE : SIDE.BLACK;
 
-        if (this.isPromotable(dst)) {
-          const newPType = promote(this.map[dst]);
-          this.map[dst].ptype = newPType;
-        }
-
-        return checkRule.isChecked(this.map, this.turn);
+        return {
+          isChecked: checkRule.isChecked(this.map, this.turn),
+          isPromotable: this.isPromotable(dst),
+        };
       }
     }
 
     throw new Error(ErrorMessage.MOVE);
   }
 
-  isPromotable = (cur: number) =>
+  private isPromotable = (cur: number) =>
     this.map[cur].ptype === PTYPE.Pawn &&
     (Math.floor(cur / 8) === 0 || Math.floor(cur / 8) === 7);
+
+  promote = (cur: number, ptype: PTYPE) => {
+    this.map[cur].ptype = ptype;
+  };
 
   isEndGame = (): "Checkmate" | "Stylemate" | undefined => {
     const isAvailableToMove = this.map.some((piece, cur) => {
