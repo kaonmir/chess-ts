@@ -41,6 +41,7 @@ export default class Chess {
     return newMap;
   }
 
+  // TODO: Promotion을 표현할 방법이 없다.
   private parseLog(logString: String): Array<Log> {
     var newLog: Array<Log> = [];
     const logArr = logString
@@ -54,7 +55,7 @@ export default class Chess {
     });
 
     try {
-      newLog.forEach(({ cur, dst }) => this.move(cur, dst));
+      newLog.forEach(({ cur, dst }) => this.move(cur, dst, () => PTYPE.EMPTY));
     } catch {
       throw Error(ErrorMessage.LOG_LOAD);
     }
@@ -73,7 +74,7 @@ export default class Chess {
     return answer.filter((dst) => checkRule.isAvailable(this.map, cur, dst));
   }
 
-  move(cur: number, dst: number): Boolean {
+  move(cur: number, dst: number, promote: (piece: Piece) => PTYPE): Boolean {
     if (this.map[cur] === EMPTY_PIECE) throw Error(ErrorMessage.MOVE_EMPTY);
     else if (this.turn !== this.map[cur].side)
       throw Error(ErrorMessage.MOVE_ENEMY);
@@ -84,12 +85,21 @@ export default class Chess {
         this.logs.push({ cur, dst });
         this.turn = this.map[dst].side === SIDE.BLACK ? SIDE.WHITE : SIDE.BLACK;
 
+        if (this.isPromotable(dst)) {
+          const newPType = promote(this.map[dst]);
+          this.map[dst].ptype = newPType;
+        }
+
         return checkRule.isChecked(this.map, this.turn);
       }
     }
 
     throw new Error(ErrorMessage.MOVE);
   }
+
+  isPromotable = (cur: number) =>
+    this.map[cur].ptype === PTYPE.Pawn &&
+    (Math.floor(cur / 8) === 0 || Math.floor(cur / 8) === 7);
 
   isEndGame = (): "Checkmate" | "Stylemate" | undefined => {
     const isAvailableToMove = this.map.some((piece, cur) => {
